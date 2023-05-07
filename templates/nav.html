@@ -1,42 +1,37 @@
-<!-- navbar -->
+<!-- nav -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container">
-        <a class="navbar-brand" href="/" role="navigation">Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'cctv:index' %}">혼잡도 알리미</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-5">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:;" role="navigation">nav btn1</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'cctv:index' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:;" role="navigation">nav btn2</a>
+                    <a class="nav-link" href="javascript:;">Link</a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        dropdown
+                        Dropdown
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">로그아웃</a></li>
-                        <li><a class="dropdown-item" href="">내 정보 수정</a></li>
-                        <!-- <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                        <li><a class="dropdown-item" href="javascript:;">Action</a></li>
+                        <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
                     </ul>
                 </li>
-                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:;" role="navigation">로그인</a>
+                    <a class="nav-link disabled">Disabled</a>
                 </li>
-                &nbsp;
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:;" role="navigation">회원가입</a>
-                </li>
-                {% endif %}
             </ul>
+            <form class="d-flex" role="search" method="get">
+                <input id="id_q" name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
     </div>
 </nav>
