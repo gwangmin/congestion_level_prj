@@ -2,8 +2,12 @@
 TCP로 혼잡도 받아서 뿌려주기
 
 # how to run server
-source prepare_dev
-python manage.py runserver
+- in dev
+    source prepare_dev
+    python manage.py runserver
+- in deploy
+    docker-compose build
+    docker-compose up
 
 # accounts
 - superuser
