@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 import math
 from .models import *
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
 template_dir = 'cctv/'
 
@@ -56,6 +57,13 @@ def search(req):
     facilities = Facility.objects.all()
     if q:
         pass
+
+@csrf_exempt
+def connection_test(req):
+    '''
+    # test
+    '''
+    return HttpResponse(req)
 
 def show_congestion(req, building_id):
     '''
