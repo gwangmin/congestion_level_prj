@@ -51,12 +51,24 @@ def search(req):
     '''
     facility search
 
-    TODO: 나중에 완성
+    TODO
     '''
-    q = req.GET.get('q', '')
     facilities = Facility.objects.all()
+    buildings = Building.objects.all()
+
+    q = req.GET.get('q', '')
     if q:
-        pass
+        facilities = facilities.filter(
+            Q(name__icontains=q) |
+            Q(intro__icontains=q) |
+            Q(addr__icontains=q) |
+            Q(web_addr__icontains=q) |
+            Q(phone_num__icontains=q)
+        ).distinct()
+        buildings = buildings.filter(
+            Q(name__icontains=q) |
+            Q(intro__icontains=q)
+        ).distinct()
 
 @csrf_exempt
 def connection_test(req):
@@ -68,6 +80,8 @@ def connection_test(req):
 def show_congestion(req, building_id):
     '''
     building_id: building id
+
+    TODO
     '''
     def get_congestion():
         '''
