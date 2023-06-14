@@ -8,7 +8,7 @@ class Facility(models.Model):
     name = models.CharField(max_length=200, verbose_name='시설명')
     intro = models.TextField(null=True, blank=True, verbose_name='시설 소개')
     addr = models.CharField(max_length=200, verbose_name='주소')
-    internet_addr = models.CharField(max_length=200, verbose_name='홈페이지 주소')
+    web_addr = models.CharField(max_length=200, verbose_name='홈페이지 주소')
     phone_num = models.CharField(max_length=30, verbose_name='전화번호')
 
     def __str__(self) -> str:
@@ -21,7 +21,7 @@ class Building(models.Model):
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name='관 이름')
     intro = models.TextField(null=True, blank=True, verbose_name='관 소개')
-    congest_lv = models.CharField(max_length=30, null=True, blank=True, verbose_name='혼잡도')
+    congest_lv = models.CharField(max_length=30, null=True, blank=True, verbose_name='혼잡도') # float
 
     def __str__(self) -> str:
         return self.name
