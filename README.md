@@ -12,3 +12,12 @@ TCP로 혼잡도 받아서 뿌려주기
 # accounts
 - superuser
     admin/jy1234
+
+# db tables
+- Facility
+  - Building
+    - CCTV
+- Statistics
+
+# Server
+- http://ec2-54-180-160-31.ap-northeast-2.compute.amazonaws.com/
