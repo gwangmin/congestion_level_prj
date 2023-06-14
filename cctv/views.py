@@ -53,22 +53,25 @@ def search(req):
 
     TODO
     '''
+    q = req.GET.get('q', '')
+    if q == '': return HttpResponse('require keyword')
+
+
     facilities = Facility.objects.all()
     buildings = Building.objects.all()
-
-    q = req.GET.get('q', '')
-    if q:
-        facilities = facilities.filter(
-            Q(name__icontains=q) |
-            Q(intro__icontains=q) |
-            Q(addr__icontains=q) |
-            Q(web_addr__icontains=q) |
-            Q(phone_num__icontains=q)
-        ).distinct()
-        buildings = buildings.filter(
-            Q(name__icontains=q) |
-            Q(intro__icontains=q)
-        ).distinct()
+    facilities = facilities.filter(
+        Q(name__icontains=q) |
+        Q(intro__icontains=q) |
+        Q(addr__icontains=q) |
+        Q(web_addr__icontains=q) |
+        Q(phone_num__icontains=q)
+    ).distinct()
+    buildings = buildings.filter(
+        Q(name__icontains=q) |
+        Q(intro__icontains=q)
+    ).distinct()
+    
+    return render(req, template_dir + 'serch_result.html', {'facilities': facilities})
 
 @csrf_exempt
 def connection_test(req):
