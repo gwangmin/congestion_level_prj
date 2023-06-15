@@ -6,6 +6,7 @@ import math
 from .models import *
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 template_dir = 'cctv/'
 
@@ -100,3 +101,18 @@ def get_congest(req, building_id):
     building = get_object_or_404(Building, pk=building_id)
     congest_lv = building.congest_lv
     return HttpResponse(congest_lv)
+
+def update_congest(req):
+    '''
+    Receive congestion level from http post json.
+    And save it to db
+
+    TODO
+    '''
+    if req.method == 'POST':
+        recv_json = json.loads(req.body)
+        # retrieve data
+
+        # building = cctv.building
+        # building.congest_lv = retrieved_congest_lv
+        # building.save()
