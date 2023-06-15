@@ -84,19 +84,19 @@ def connection_test(req):
 
 def show_congestion(req, building_id):
     '''
+    Show congestion level
+    
     building_id: building id
-
-    TODO
     '''
-    def get_congestion():
-        '''
-        yield current congestion level every 5 seconds
-        '''
-        while True:
-            # get current congestion level
-            building = get_object_or_404(Building, pk=building_id)
-            congest_lv = building.congest_lv
-            yield congest_lv.encode('utf-8')
-            time.sleep(5)
-    response = StreamingHttpResponse(get_congestion(), content_type='text/plain')
-    return response
+    building = get_object_or_404(Building, pk=building_id)
+    
+    context = {'building': building, 'facility': building.facility}
+    return render(req, template_dir + 'congest_viewer.html', context)
+
+def get_congest(req, building_id):
+    '''
+    get current congestion level
+    '''
+    building = get_object_or_404(Building, pk=building_id)
+    congest_lv = building.congest_lv
+    return HttpResponse(congest_lv)

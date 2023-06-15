@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-3">
+    <h3>시설</h3>
+    <table class="table">
+        <tr>
+            <th>이름</th>
+            <td>{{ facility.name }}</td>
+        </tr>
+        <tr>
+            <th>소개</th>
+            <td>{{ facility.intro|default_if_none:'' }}</td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td>{{ facility.addr }}</td>
+        </tr>
+        <tr>
+            <th>홈페이지 주소</th>
+            <td>{{ facility.web_addr }}</td>
+        </tr>
+        <tr>
+            <th>전화번호</th>
+            <td>{{ facility.phone_num }}</td>
+        </tr>
+    </table>
+    <br /><br />
+
+    <h3>관</h3>
+    <table class="table">
+        <tr>
+            <th>이름</th>
+            <td>{{ building.name }}</td>
+        </tr>
+        <tr>
+            <th>소개</th>
+            <td>{{ building.intro|default_if_none:'' }}</td>
+        </tr>
+        <tr>
+            <th>혼잡도</th>
+            <td id="congest_viewer" data-url="{% url 'cctv:get_congest' building.id %}"></td>
+        </tr>
+    </table>
+</div>
+<script>
+    const congest_viewer = document.getElementById('congest_viewer');
+    function update_congest() {
+        fetch(congest_viewer.dataset.url).then(resp => {
+            resp.text().then(text => {
+                congest_viewer.innerHTML = text;
+                console.log(text);
+            });
+        });
+    }
+    setInterval(update_congest, 5000);
+</script>
+
+{% endblock %}
