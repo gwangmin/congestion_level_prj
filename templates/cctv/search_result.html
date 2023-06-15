@@ -2,9 +2,64 @@
 {% block content %}
 
 <div class="container my-3">
+    {% if not facilities %}
+    검색결과가 없습니다.
+    {% endif %}
     {% for facility in facilities %}
-    <div class="card text-center" style="width: 18rem;">
+    <div class="card px-3 py-1">
         {{ facility.name }}
+        <div class="d-flex justify-content-end my-2">
+            <a class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#facilityModal-{{ facility.id }}">more</a>
+        </div>
+        <div class="modal fade" id="facilityModal-{{ facility.id }}" tabindex="-1" aria-labelledby="facilityModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ facility.name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <style>
+                            td {
+                                padding: 3%;
+                            }
+                        </style>
+                        <table>
+                            <tr>
+                                <th>소개</th>
+                                <td>{{ facility.intro|default_if_none:'' }}</td>
+                            </tr>
+                            <tr>
+                                <th>주소</th>
+                                <td>{{ facility.addr }}</td>
+                            </tr>
+                            <tr>
+                                <th>홈페이지 주소</th>
+                                <td>{{ facility.web_addr }}</td>
+                            </tr>
+                            <tr>
+                                <th>전화번호</th>
+                                <td>{{ facility.phone_num }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+          
+
+        {% for building in facility.building_set.all %}
+        <div class="card text-center px-1 py-1">
+            {{ building.name }}
+            <div class="d-flex justify-content-end my-1">
+                <a class="btn btn-outline-success btn-sm" href="{% url 'cctv:view' building.id %}">more</a>
+            </div>
+        </div>
+        {% endfor %}
+        
     </div>
     {% endfor %}
 </div>
