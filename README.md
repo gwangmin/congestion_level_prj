@@ -4,10 +4,11 @@ TCP로 혼잡도 받아서 뿌려주기
 # accounts
 - superuser
     admin/jy1234
+- 제약사항: FacilityManager 계정 하나 당 담당 Facility 한 개
 
 # db tables
-- Facility
-  - Building
+- Facility(시설)
+  - Building(관)
     - CCTV
 - Statistics
 
