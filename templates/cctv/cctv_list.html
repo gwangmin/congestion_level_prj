@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% block content %}
+
+<h1 class="text-center">내가 관리 중인 CCTV 목록</h1>
+
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr class="text-center table-dark">
+                <th style="width: 80%">촬영범위</th>
+                <th>삭제</th>
+            </tr>
+        </thead>
+    
+        <tbody>
+            {% for cctv in cctv_list %}
+            <tr class="text-center">
+                <td class="text-start">
+                    <a href="{% url 'cctv:edit_cctv' cctv.id %}">{{ cctv.coverage }}</a>
+                </td>
+                <td><a class="btn btn-secondary" href="{% url 'cctv:remove_cctv' cctv.id %}">삭제</a></td>
+            </tr>
+            {% endfor %}
+            {% if not cctv_list %}
+            <tr>
+                <td colspan="2">관리 중인 CCTV가 없습니다.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{% url 'cctv:add_cctv' %}" class="btn btn-primary" role="button">추가</a>
+
+{% endblock %}

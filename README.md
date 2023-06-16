@@ -1,10 +1,12 @@
-# webserber using python django
-TCP로 혼잡도 받아서 뿌려주기
-
 # accounts
 - superuser
     admin/jy1234
 - 제약사항: FacilityManager 계정 하나 당 담당 Facility 한 개
+
+# Facility Manager 계정 추가하는 방법
+1. python manage.py createsuperuser로 추가
+2. admin 페이지에서 방금 추가한 계정 수정
+3. 최상위 사용자 권한, 스태프 권한 삭제하고 facility 지정
 
 # db tables
 - Facility(시설)

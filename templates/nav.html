@@ -7,25 +7,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'cctv:index' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript:;">Link</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
+                        시설 관리자(Facility Manager)
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">Action</a></li>
-                        <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
+                        {% if not user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:login' %}">로그인</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">로그아웃</a></li>
+                        {% endif %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
+                        <li><a class="dropdown-item" href="{% url 'cctv:edit_facility' %}">시설 정보 수정</a></li>
+                        <li><a class="dropdown-item" href="{% url 'cctv:show_buildings' %}">관별 정보 관리</a></li>
+                        <li><a class="dropdown-item" href="{% url 'cctv:show_cctvs' %}">CCTV 정보 관리</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
                 </li>
             </ul>
             <form class="d-flex" role="search" method="get" action="{% url 'cctv:search' %}">
