@@ -8,7 +8,9 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('view/<int:building_id>/', views.show_congestion, name='view'),
     path('get/<int:building_id>/', views.get_congest, name='get_congest'),
+
     path('update_congest/', views.update_congest, name='update_congest'),
+    path('set_base/', views.set_base, name='set_base'),
 
     path('edit/facility/', views.edit_facility, name='edit_facility'),
 

@@ -191,6 +191,17 @@ def get_facility(req):
                                                                                          'rt_base': cctv.rt_base}
         return HttpResponse(json.dumps(data))
 
+@csrf_exempt
+def set_base(req):
+    '''
+    '''
+    if req.method == 'POST':
+        recv_json = json.loads(req.body)
+        building = CCTV.objects.get(pk=int(recv_json['nametag'])).building
+        building.base = recv_json['base']
+        building.save()
+
+        HttpResponse('ok')
 
 @login_required(login_url='accounts:login')
 def edit_facility(req):
