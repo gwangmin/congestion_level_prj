@@ -31,8 +31,10 @@ class CCTV(models.Model):
     CCTV
     '''
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
-    coverage = models.CharField(max_length=200, verbose_name='촬영 범위')
-    computed_congest_lv = models.CharField(max_length=30, null=True, blank=True, verbose_name='계산된 혼잡도')
+    rtsp_url = models.CharField(max_length=100, verbose_name='RTSP URL', null=True, blank=True)
+    base = models.CharField(max_length=100, verbose_name='BASE 영역(픽셀)', null=True, blank=True)
+    rt_base = models.CharField(max_length=100, verbose_name='실시간 바닥 영역', null=True, blank=True)
+    # coverage = models.CharField(max_length=200, verbose_name='촬영 범위')
 
     def __str__(self) -> str:
         return f'{self.building.name} - {self.id}'

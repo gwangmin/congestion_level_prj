@@ -17,7 +17,7 @@
             {% for cctv in cctv_list %}
             <tr class="text-center">
                 <td class="text-start">
-                    <a href="{% url 'cctv:edit_cctv' cctv.id %}">{{ cctv.coverage }}</a>
+                    <a href="{% url 'cctv:edit_cctv' cctv.id %}">{{ cctv.building.name }}-{{ cctv.id }}</a>
                 </td>
                 <td><a class="btn btn-secondary" href="{% url 'cctv:remove_cctv' cctv.id %}">삭제</a></td>
             </tr>

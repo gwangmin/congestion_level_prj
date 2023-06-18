@@ -141,6 +141,8 @@ def update_congest(req):
         building.congest_lv = congest_label
         building.save()
 
+        return HttpResponse('ok')
+
 def get_facility(req):
     '''
     Request with fname by GET param, send facility info as json.
@@ -156,7 +158,9 @@ def get_facility(req):
                     'congest_lv':<congestion level value>,
                     'cctvs':{
                         cctv1_id:{
-                            'coverage':'...'
+                            'rtsp_url':'...',
+                            'base':'...',
+                            'rt_base':'...',
                         },
                         cctv2_id...
                     }
@@ -180,7 +184,9 @@ def get_facility(req):
                 data[facility.name]['buildings'][building.name] = {'intro':building.intro, 'congest_lv':building.congest_lv,
                                                                    'cctvs':{}}
                 for i, cctv in enumerate(building.cctv_set.all()):
-                    data[facility.name]['buildings'][building.name]['cctvs'][cctv.id] = {'coverage':cctv.coverage}
+                    data[facility.name]['buildings'][building.name]['cctvs'][cctv.id] = {'rtsp_url': cctv.rtsp_url,
+                                                                                         'base': cctv.base,
+                                                                                         'rt_base': cctv.rt_base}
         return HttpResponse(json.dumps(data))
 
 @login_required(login_url='accounts:login')
