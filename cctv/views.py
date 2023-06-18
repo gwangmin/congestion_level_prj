@@ -191,6 +191,7 @@ def get_facility(req):
                                                                                          'rt_base': cctv.rt_base}
         return HttpResponse(json.dumps(data))
 
+
 @login_required(login_url='accounts:login')
 def edit_facility(req):
     '''
