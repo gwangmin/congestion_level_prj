@@ -106,6 +106,7 @@ def get_congest(req, building_id):
     congest_lv = building.congest_lv
     return HttpResponse(congest_lv)
 
+@csrf_exempt
 def update_congest(req):
     '''
     Receive congestion level from http post json.
