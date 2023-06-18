@@ -111,15 +111,17 @@ def update_congest(req):
     '''
     Receive congestion level from http post json.
     And save it to db
-
-    TODO
+    
+    received json format:
+    {
+        "fname": facility name. string,
+        "nametag": cctv id. string or int,
+        "value": congestion value [0,1]. float,
+        "timestamp": timestamp. float
+    }
     '''
     if req.method == 'POST':
         recv_json = json.loads(req.body)
-        '''
-        - json -
-        fname: facility name, nametag: id string, value: float [0,1], timestamp
-        '''
         # get cctv from nametag, facility
         cctv = CCTV.objects.get(pk=int(recv_json['nametag']))
         # parse congestion level from value
@@ -194,6 +196,12 @@ def get_facility(req):
 @csrf_exempt
 def set_base(req):
     '''
+    Set building.base from POST json
+    format:
+    {
+        "nametag": cctv id. string or int,
+        "base": base pixel. string
+    }
     '''
     if req.method == 'POST':
         recv_json = json.loads(req.body)
@@ -201,7 +209,7 @@ def set_base(req):
         building.base = recv_json['base']
         building.save()
 
-        HttpResponse('ok')
+        return HttpResponse('ok')
 
 @login_required(login_url='accounts:login')
 def edit_facility(req):
