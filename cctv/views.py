@@ -173,7 +173,9 @@ def get_facility(req):
     '''
     if req.method == 'GET':
         # get fname
-        facility_name = req.GET.get('fname')
+        facility_name = req.GET.get('fname', '')
+        if facility_name == '':
+            return HttpResponse('fname required')
         # get list
         data = {}
         facilities = Facility.objects.filter(name__icontains=facility_name)
