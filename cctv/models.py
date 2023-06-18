@@ -21,6 +21,7 @@ class Building(models.Model):
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, verbose_name='관 이름')
     intro = models.TextField(null=True, blank=True, verbose_name='관 소개')
+    base = models.CharField(max_length=100, verbose_name='BASE 영역(픽셀)', null=True, blank=True)
     congest_lv = models.CharField(max_length=30, null=True, blank=True, verbose_name='혼잡도') # float
 
     def __str__(self) -> str:
@@ -32,7 +33,7 @@ class CCTV(models.Model):
     '''
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     rtsp_url = models.CharField(max_length=100, verbose_name='RTSP URL', null=True, blank=True)
-    base = models.CharField(max_length=100, verbose_name='BASE 영역(픽셀)', null=True, blank=True)
+    # base = models.CharField(max_length=100, verbose_name='BASE 영역(픽셀)', null=True, blank=True)
     rt_base = models.CharField(max_length=100, verbose_name='실시간 바닥 영역', null=True, blank=True)
     # coverage = models.CharField(max_length=200, verbose_name='촬영 범위')
 

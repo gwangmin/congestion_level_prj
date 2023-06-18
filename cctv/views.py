@@ -155,11 +155,11 @@ def get_facility(req):
             'buildings':{
                 building1_name:{
                     'intro':'...',
+                    'base':'...',
                     'congest_lv':<congestion level value>,
                     'cctvs':{
                         cctv1_id:{
                             'rtsp_url':'...',
-                            'base':'...',
                             'rt_base':'...',
                         },
                         cctv2_id...
@@ -183,11 +183,10 @@ def get_facility(req):
             data[facility.name] = {'intro':facility.intro, 'addr':facility.addr, 'web_addr':facility.web_addr,
                                    'phone_num':facility.phone_num, 'buildings':{}}
             for building in facility.building_set.all():
-                data[facility.name]['buildings'][building.name] = {'intro':building.intro, 'congest_lv':building.congest_lv,
-                                                                   'cctvs':{}}
+                data[facility.name]['buildings'][building.name] = {'intro':building.intro, 'base':building.base,
+                                                                   'congest_lv':building.congest_lv, 'cctvs':{}}
                 for i, cctv in enumerate(building.cctv_set.all()):
                     data[facility.name]['buildings'][building.name]['cctvs'][cctv.id] = {'rtsp_url': cctv.rtsp_url,
-                                                                                         'base': cctv.base,
                                                                                          'rt_base': cctv.rt_base}
         return HttpResponse(json.dumps(data))
 
