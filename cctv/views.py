@@ -126,13 +126,13 @@ def update_congest(req):
         cctv = CCTV.objects.get(pk=int(recv_json['nametag']))
         # parse congestion level from value
         congest_lv = float(recv_json['value'])
-        if congest_lv < .25:
+        if congest_lv < .25:# 0~0.25
             congest_label = '여유 ' + str(congest_lv)
-        elif congest_lv < .5:
+        elif congest_lv < .5:# 0.25~0.5
             congest_label = '보통 ' + str(congest_lv)
-        elif congest_lv < .75:
+        elif congest_lv < .7:# 0.5~0.7
             congest_label = '혼잡 ' + str(congest_lv)
-        else:
+        else:# 0.7~1
             congest_label = '매우혼잡 ' + str(congest_lv)
         # save Statistics using value, timestamp
         stat = Statistics(building=cctv.building, congest_lv=congest_lv)
