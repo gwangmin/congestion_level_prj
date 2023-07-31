@@ -31,4 +31,4 @@ user request -> server docker -> nginx <-> gunicorn -> django
   3. docker-compose build, up
 
 # Server
-- http://ec2-54-180-160-31.ap-northeast-2.compute.amazonaws.com/
+- http://3.37.73.70/
