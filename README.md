@@ -1,6 +1,8 @@
 # accounts
 - superuser
     admin/jy1234
+- facility manager
+    fm/fm
 - 제약사항: FacilityManager 계정 하나 당 담당 Facility 한 개
 
 # Facility Manager 계정 추가하는 방법
