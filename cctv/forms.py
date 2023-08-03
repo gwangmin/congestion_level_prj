@@ -14,7 +14,7 @@ class BuildingForm(forms.ModelForm):
 class CCTVForm(forms.ModelForm):
     class Meta:
         model = CCTV
-        fields = ['building', 'rtsp_url'] # building 추가
+        fields = ['rtsp_url'] # building 추가
 
 # class QuestionForm(forms.ModelForm):
 #     class Meta:

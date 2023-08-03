@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <form method="post" class="post-form my-3">
+        {% csrf_token %}
+        
+        <p>
+            <label for="id_building">Building:</label>
+            <select name="building" required id="id_building">
+                {% if not selected_building %}
+                <option value="" selected>---------</option>
+                {% endif %}
+
+                {% for building in user.facility.building_set.all %}
+                <option value="{{ building.id }}"{% if selected_building == building.id %} selected{% endif %}>
+                    {{ building.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </p>
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">저장</button>
+    </form>
+</div>
+
+{% endblock %}

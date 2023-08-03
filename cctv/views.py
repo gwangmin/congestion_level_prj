@@ -291,12 +291,17 @@ def add_cctv(req):
         form = CCTVForm()
     elif req.method == 'POST':
         form = CCTVForm(req.POST)
+        # is valid?
+        bid = req.POST.get('building')
+        if bid == '':
+            return render(req, template_dir + 'cctv_form.html', {'form': form})
         if form.is_valid():
             cctv = form.save(commit=False)
+            cctv.building = get_object_or_404(Building, pk=int(bid))
             cctv.save()
             messages.info(req, '방금 추가한 CCTV의 id는 ' + str(cctv.id) + '입니다.')
             return redirect('cctv:show_cctvs')
-    return render(req, template_dir + 'edit_form.html', {'form': form})
+    return render(req, template_dir + 'cctv_form.html', {'form': form})
 
 @login_required(login_url='accounts:login')
 def edit_cctv(req, cctv_id):
@@ -312,9 +317,11 @@ def edit_cctv(req, cctv_id):
     elif req.method == 'POST':
         form = CCTVForm(req.POST, instance=cctv)
         if form.is_valid():
-            form.save(commit=True)
+            cctv = form.save(commit=False)
+            cctv.building = get_object_or_404(Building, pk=int(req.POST.get('building')))
+            cctv.save()
             return redirect('cctv:show_cctvs')
-    return render(req, template_dir + 'edit_form.html', {'form': form})
+    return render(req, template_dir + 'cctv_form.html', {'form': form, 'selected_building': cctv.building.id})
 
 @login_required(login_url='accounts:login')
 def show_cctvs(req):
