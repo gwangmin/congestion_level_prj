@@ -123,7 +123,7 @@ def update_congest(req):
     if req.method == 'POST':
         recv_json = json.loads(req.body)
         # get cctv from nametag, facility
-        cctv = CCTV.objects.get(pk=int(recv_json['nametag']))
+        cctv = get_object_or_404(CCTV, pk=int(recv_json['nametag']))
         # parse congestion level from value
         congest_lv = float(recv_json['value'])
         if congest_lv < .25:# 0~0.25
