@@ -114,16 +114,16 @@ def update_congest(req):
     
     received json format:
     {
-        "fname": facility name. string,
-        "nametag": cctv id. string or int,
+        # "fname": facility name. string,
+        "nametag": building id. string or int,
         "value": congestion value [0,1]. float,
         "timestamp": timestamp. float
     }
     '''
     if req.method == 'POST':
         recv_json = json.loads(req.body)
-        # get cctv from nametag, facility
-        cctv = get_object_or_404(CCTV, pk=int(recv_json['nametag']))
+        # get building from nametag, facility
+        building = get_object_or_404(Building, pk=int(recv_json['nametag']))
         # parse congestion level from value
         congest_lv = float(recv_json['value'])
         if congest_lv < .25:# 0~0.25
@@ -135,12 +135,11 @@ def update_congest(req):
         else:# 0.7~1
             congest_label = '매우혼잡 ' + str(congest_lv)
         # save Statistics using value, timestamp
-        stat = Statistics(building=cctv.building, congest_lv=congest_lv)
+        stat = Statistics(building=building, congest_lv=congest_lv)
         stat.time = datetime.datetime.fromtimestamp(float(recv_json['timestamp']))
         stat.save()
 
         # save congestion level for user:
-        building = cctv.building
         building.congest_lv = congest_label
         building.save()
 
@@ -151,12 +150,14 @@ def get_facility(req):
     Request with fname by GET param, send facility info as json.
     {
         facility1_name:{
+            'id': ...,
             'intro':'...',
             'addr':'...',
             'web_addr':'...',
             'phone_num':'...',
             'buildings':{
                 building1_name:{
+                    'id': ...,
                     'intro':'...',
                     'base':'...',
                     'congest_lv':<congestion level value>,
@@ -183,10 +184,11 @@ def get_facility(req):
         data = {}
         facilities = Facility.objects.filter(name__icontains=facility_name)
         for facility in facilities:
-            data[facility.name] = {'intro':facility.intro, 'addr':facility.addr, 'web_addr':facility.web_addr,
-                                   'phone_num':facility.phone_num, 'buildings':{}}
+            data[facility.name] = {'id':facility.id, 'intro':facility.intro, 'addr':facility.addr,
+                                   'web_addr':facility.web_addr, 'phone_num':facility.phone_num, 'buildings':{}}
             for building in facility.building_set.all():
-                data[facility.name]['buildings'][building.name] = {'intro':building.intro, 'base':building.base,
+                data[facility.name]['buildings'][building.name] = {'id':building.id, 'intro':building.intro,
+                                                                   'base':building.base,
                                                                    'congest_lv':building.congest_lv, 'cctvs':{}}
                 for i, cctv in enumerate(building.cctv_set.all()):
                     data[facility.name]['buildings'][building.name]['cctvs'][cctv.id] = {'rtsp_url': cctv.rtsp_url,
@@ -199,13 +201,13 @@ def set_base(req):
     Set building.base from POST json
     format:
     {
-        "nametag": cctv id. string or int,
+        "nametag": building id. string or int,
         "base": base pixel. string
     }
     '''
     if req.method == 'POST':
         recv_json = json.loads(req.body)
-        building = CCTV.objects.get(pk=int(recv_json['nametag'])).building
+        building = get_object_or_404(Building, pk=int(recv_json['nametag']))
         building.base = recv_json['base']
         building.save()
 
@@ -240,6 +242,7 @@ def add_building(req):
             b = form.save(commit=False)
             b.facility = req.user.facility
             b.save()
+            messages.info(req, '방금 추가한 관의 id는 ' + str(b.id) + '입니다.')
             return redirect('cctv:show_buildings')
     return render(req, template_dir + 'edit_form.html', {'form': form})
 
@@ -299,7 +302,6 @@ def add_cctv(req):
             cctv = form.save(commit=False)
             cctv.building = get_object_or_404(Building, pk=int(bid))
             cctv.save()
-            messages.info(req, '방금 추가한 CCTV의 id는 ' + str(cctv.id) + '입니다.')
             return redirect('cctv:show_cctvs')
     return render(req, template_dir + 'cctv_form.html', {'form': form})
 

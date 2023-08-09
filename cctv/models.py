@@ -25,7 +25,7 @@ class Building(models.Model):
     congest_lv = models.CharField(max_length=30, null=True, blank=True, verbose_name='혼잡도') # float
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.id} - {self.name}'
     
 class CCTV(models.Model):
     '''
