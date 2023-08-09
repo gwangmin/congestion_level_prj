@@ -1,3 +1,13 @@
+# re-deploy
+0. enter screen
+1. sudo docker-compose down -v
+2. 도커 이미지 삭제
+3. cd ..; sudo rm -rf congestion_level_prj
+4. git clone https://github.com/gwangmin/congestion_level_prj.git
+5. 깃헙 로긴
+6. cd congestion_level_prj; sudo docker-compose build
+7. sudo docker-compose up
+
 # accounts
 - superuser
     admin/jy1234
